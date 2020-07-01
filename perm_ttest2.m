@@ -17,6 +17,9 @@ if nargin < 2
 	error(message('stats:ttest2:TooFewInputs'));
 end
 
+x(isnan(x)) = [];
+y(isnan(y)) = [];
+
 % Process remaining arguments
 alpha = 0.05;
 tail = 0;    % code for two-sided;
@@ -156,7 +159,7 @@ if vartype == 1 % equal variances
 	xsubinds = repmat({':'},1,ndims(P));
 	ysubinds = repmat({':'},1,ndims(P));
 	psubinds = repmat({':'},1,ndims(P));
-	disp(['Running permutation t-test using ', num2str(nperm),' iterations']);
+% 	disp(['Running permutation t-test using ', num2str(nperm),' iterations']);
 	for perm_i = 1:nperm	
 		x_inds = x_inds(randperm(n));
 		xsubinds{dim} = x_inds;
@@ -173,18 +176,26 @@ if vartype == 1 % equal variances
 			pybar(psubinds{:}) = nanmedian(py,dim);
 		end
 		if any(perm_i == round(nperm*(0:.1:1)))
-			disp([num2str(round(100*perm_i/nperm)), '% done'])
+% 			disp([num2str(round(100*perm_i/nperm)), '% done'])
 		end
 	end
 	xbar_diffs = pxbar-pybar;
 	if tail==0
-		p = nansum(abs(xbar_diffs)>=abs(difference),dim)/nperm;
+		p = nansum(abs(xbar_diffs)>=abs(difference),dim)/nperm
 	elseif tail==-1
-		p = nansum(xbar_diffs<=difference,dim)/nperm;
+		p = nansum(xbar_diffs<=difference,dim)/nperm
 	elseif tail==1
-		p = nansum(xbar_diffs>=difference,dim)/nperm;
+		p = nansum(xbar_diffs>=difference,dim)/nperm
 	end
-	
+% 		p2 = 2*min([sum(xbar_diffs>difference);sum(difference<xbar_diffs)],[],1)/length(xbar_diffs)
+% 		p3 = sum(abs(xbar_diffs)>abs(difference))/length(xbar_diffs)
+% 	if p<0.1
+		disp(['xbar = ',num2str(round(xmean,3)),...
+ ', ybar = ',num2str(round(ymean,3)),...
+', diff =', num2str(round(difference,3)),...
+', p = ',num2str(round(p,3))])
+% 	end
+
 elseif vartype == 2 % unequal variances
 % 		xbar_diffs = [];
 % 		bx = x(:,randi(nx,1,nx*nperm));
