@@ -2,7 +2,7 @@ classdef iirsos
 	properties
 	end
 	methods (Static)
-		%% highpass method
+		%% HIGH PASS method
 		function [data, srate, sixdbcutoff_hz, passband_hz, desired_passband_ripple, n] = ...
 			hp(data,srate, sixdbcutoff_hz, passband_hz, desired_passband_ripple, plot_freq_response, verbose)
 		tic;
@@ -18,8 +18,7 @@ classdef iirsos
 			disp(['IIR SOS Highpass: Filtered in ',num2str(toc,3),' seconds'])
 		end
 		end
-		
-		%% design highpass
+		% design highpass
 		function [sos, n] = design_hp(srate, sixdbcutoff_hz, passband_hz, desired_passband_ripple, plot_freq_response, verbose)
 		nyq = srate/2;
 		wp = (passband_hz/nyq); % normalize passband edge
@@ -28,7 +27,6 @@ classdef iirsos
 		rs = 6; % set -6 db dropoff
 		[n,wn] = buttord(wp,ws,desired_passband_ripple,rs);
 
-		
 		[A,B,C,D] = butter(n,wn, 'high'); % highpass
 		sos = ss2sos(A,B,C,D); % convert to sos representation
 		if plot_freq_response
@@ -74,7 +72,7 @@ classdef iirsos
 		end
 		end
 		
-		%% design bandpass
+		% design bandpass
 		% inverts bandstop filter by swapping arguments
 		function [sos, n] = design_bp(srate, inner_hz, outer_hz, desired_passband_ripple, plot_freq_response, verbose)
 		nyq = srate/2;
@@ -126,7 +124,7 @@ classdef iirsos
 		
 		%% BAND STOP method
 		function [data, srate, passband_w, stopband_w, desired_passband_ripple, rs, n] = ...
-			bs(data, srate, inner_hz, outer_hz, desired_passband_ripple, plot_freq_response)
+			bs(data, srate, inner_hz, outer_hz, desired_passband_ripple, plot_freq_response, verbose)
 		tic
 		if size(data,1)>size(data,2)
 			warning('Only works on data with channels as rows');
@@ -168,20 +166,27 @@ classdef iirsos
 		[h,f] = freqz(sos, srate*1000, srate );
 		[~,cutoff_i] = mink(abs(mag2db(abs(h))+6),2);
 		db_cutoff = f(cutoff_i)';
-		disp(['IIR SOS Bandstop: -6 dB cutoff point at: ',num2str(db_cutoff),' Hz'])
+		if verbose
+			disp(['IIR SOS Bandstop: -6 dB cutoff point at: ',num2str(db_cutoff),' Hz']);
+		end
 		
 		% check pb ripple
 		lf = f <= outer_hz(1);
 		rf = outer_hz(2) <= f;
 		pbr = lf | rf;
-		disp(['IIR SOS Bandstop: Average passband ripple: ',num2str(mean(abs(mag2db(abs(h(pbr)))))),' dB'])
-		
+		if verbose
+			disp(['IIR SOS Bandstop: Average passband ripple: ',num2str(mean(abs(mag2db(abs(h(pbr)))))),' dB'])
+		end
+
 		% filter
 		x = data(:,:)';
 		x = sosfilt(sos,x);
 		x = flip(sosfilt(sos,flip(x)));
 		data = reshape(x',size(data));
-		disp(['IIR SOS Bandstop: Filtered in ',num2str(toc,3),' seconds'])
+		if verbose
+			disp(['IIR SOS Bandstop: Filtered in ',num2str(toc,3),' seconds'])
+		end
+
 		end
 		
 		%% verify that what's in the article is best approach

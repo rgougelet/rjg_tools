@@ -353,16 +353,16 @@ on_update();
 
     function on_key(key)
         switch lower(key)
-            case {'add','k'}
+            case {'add','+','w'}
                 % decrease datascale
                 opts.yscaling = opts.yscaling*0.9;
-            case {'subtract','i'}
+            case {'subtract','-','s'}
                 % increase datascale
                 opts.yscaling = opts.yscaling*1.1;
-            case {'multiply','l'}
+            case {'multiply','*','a'}
                 % increase timerange
                 opts.wndlen = opts.wndlen*1.1;                
-            case {'divide','j'}
+            case {'divide','/','d'}
                 % decrease timerange
                 opts.wndlen = opts.wndlen*0.9;                
             case 'pagedown'
