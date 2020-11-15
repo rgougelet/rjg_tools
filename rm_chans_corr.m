@@ -1,19 +1,19 @@
-function [temp_EEG, EEG, gui] = rm_chans_corr(temp_EEG, EEG, gui)
+function [EEG, gui] = rm_chans_corr(EEG, gui)
 str = '';
 chan_epoch_corrs = [];
 while isempty(str)
 	disp('Calculating channel pairwise correlation over time...')
 	if isempty(chan_epoch_corrs)
-	[n_chans, n_samps_per_epoch, n_epochs] = size(temp_EEG.data);
+	[n_chans, n_samps_per_epoch, n_epochs] = size(EEG.data);
 	if n_epochs < 2
 		epoch_length_in_secs = 1/5;
-		epoch_length_in_samps = temp_EEG.srate*epoch_length_in_secs;
-		n_epochs = floor(temp_EEG.pnts/epoch_length_in_samps);
-		n_samps_per_epoch = floor(temp_EEG.pnts/n_epochs);
-		temp_data = temp_EEG.data(:,1:n_samps_per_epoch*n_epochs);
+		epoch_length_in_samps = EEG.srate*epoch_length_in_secs;
+		n_epochs = floor(EEG.pnts/epoch_length_in_samps);
+		n_samps_per_epoch = floor(EEG.pnts/n_epochs);
+		temp_data = EEG.data(:,1:n_samps_per_epoch*n_epochs);
 		temp_data = reshape(temp_data, n_chans, n_samps_per_epoch, n_epochs);
 	else
-		temp_data = temp_EEG.data;
+		temp_data = EEG.data;
 	end
 		for epoch_i = 1:n_epochs
 			epoch_data = temp_data(:,:,epoch_i);
@@ -26,7 +26,7 @@ while isempty(str)
 	figure(gui); clf;
 	subplot(1,20,1:17);
 	h = heatmap(squeeze(nanmean(chan_epoch_corrs, 2)),'GridVisible','off',...
-		'XLabel', 'Correlation Over Time', 'YLabel', 'Channels', 'ColorBarVisible','off');
+		'XLabel', 'Correlation Over Time', 'YLabel', 'Channel', 'ColorBarVisible','off');
 	h.ColorScaling = 'scaledcolumns';
 	old_warning_state = warning('off', 'MATLAB:structOnObject');
 	hs = struct(h);
@@ -48,9 +48,9 @@ while isempty(str)
 		coi_index = str2double(str);
 		coi_data = temp_data(coi_index,:,:);
 		coi_data = coi_data(:,:);
-		X = [temp_EEG.chanlocs.X];
-		Y = [temp_EEG.chanlocs.Y];
-		Z = [temp_EEG.chanlocs.Z];
+		X = [EEG.chanlocs.X];
+		Y = [EEG.chanlocs.Y];
+		Z = [EEG.chanlocs.Z];
 		X_dists = X(coi_index) - X;
 		Y_dists = Y(coi_index) - Y;
 		Z_dists = Z(coi_index) - Z;
@@ -66,9 +66,9 @@ while isempty(str)
 			scatter(chan_data,coi_data);
 % 			qqplot(chan_data,coi_data);
 			sgtitle(['Channel of interest ',...
-				temp_EEG.chanlocs(str2double(str)).labels,...
+				EEG.chanlocs(str2double(str)).labels,...
 				' against its nearest neighbors']);
-			ylabel(temp_EEG.chanlocs(chan_i).labels);
+			ylabel(EEG.chanlocs(chan_i).labels);
 		end
 		prompt = ['\nRemove channel?'...
 			'(y removes channel; anything else goes back.)\n'...
@@ -76,7 +76,7 @@ while isempty(str)
 		str = input(prompt,'s');
 		if str == 'y'
 			chan_epoch_corrs = [];
-			temp_EEG = pop_interp(temp_EEG, coi_index, 'spherical');
+			EEG = pop_interp(EEG, coi_index, 'spherical');
 		end
 	end
 	str = '';
@@ -102,7 +102,7 @@ end
 % 		plot(min_min_i,'.')
 % temp_cont_data = [];
 % 		for chan_i = 1:n_chans
-% 			chan_data = reshape(temp_EEG.data(chan_i,:,:),1,[]);
+% 			chan_data = reshape(EEG.data(chan_i,:,:),1,[]);
 % 			temp_cont_data(chan_i,:) = chan_data;
 % 		end
 % 		cont_corrs = abs(corr(temp_cont_data'));
@@ -144,14 +144,14 @@ end
 % 		chans_corrs(:,chan_i) = chan_epoch_corrs;
 % 	end
 % 	[~,min_mean_i] = min(mean(chans_corrs));
-% 	% 	non_min_is = 1:temp_EEG.nbchan;
+% 	% 	non_min_is = 1:EEG.nbchan;
 % 	% 	non_min_is(min_i) = [];
 % 	% 	nonmin_chan_data = temp_data(non_min_is,:);
 % 	% 	min_chan_data = temp_data(min_i,:);
 % 	figure(gui)
 % 	subplot(3,1,1); boxplot(chans_corrs);
 % 	subplot(3,1,2); hist(chans_corrs(min_mean_i,:))
-% 	subplot(3,1,3); plot(temp_data(min_mean_i,1:(20*temp_EEG.srate)))
+% 	subplot(3,1,3); plot(temp_data(min_mean_i,1:(20*EEG.srate)))
 % 	prompt = ['\nRemove which channels?'...
 % 		' (Refer to plot; 0 returns to main menu.)\n'...
 % 		'Input: '];

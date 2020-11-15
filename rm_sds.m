@@ -1,4 +1,4 @@
-function [EEG, gui, strnum] = rm_sds(EEG, gui)
+function [EEG, gui] = rm_sds(EEG, gui)
 	str = '';
 	if ~exist('gui','var') || ~isvalid(gui)
 % 		closeafter
@@ -64,8 +64,8 @@ function [EEG, gui, strnum] = rm_sds(EEG, gui)
 		if str == 'x'
 			clf;	return;
 		end
-		strnum = str2double(str);
-		rej = ((abs(fstds)>strnum)|	(abs(festds)>strnum));
+		EEG.etc.thresh = str2double(str);
+		rej = ((abs(fstds)>EEG.etc.thresh)|	(abs(festds)>EEG.etc.thresh));
 		rej = conv(rej,[1 1 1], 'same')>=1;
 		str = '';
 	end

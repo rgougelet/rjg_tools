@@ -2,54 +2,123 @@ classdef iirsos
 	properties
 	end
 	methods (Static)
-		%% HIGH PASS method
+		% HIGH PASS method
 		function [data, srate, sixdbcutoff_hz, passband_hz, desired_passband_ripple, n] = ...
-			hp(data,srate, sixdbcutoff_hz, passband_hz, desired_passband_ripple, plot_freq_response, verbose)
-		tic;
-		if size(data,1)>size(data,2)
-			warning('Only works on data with channels as rows');
-		end
-		[sos, n] = iirsos.design_hp(srate, sixdbcutoff_hz, passband_hz, desired_passband_ripple,plot_freq_response,verbose);
-		x = data(:,:)';
-		x = sosfilt(sos,x);
-		x = flip(sosfilt(sos,flip(x)));
-		data = reshape(x',size(data));
-		if verbose
-			disp(['IIR SOS Highpass: Filtered in ',num2str(toc,3),' seconds'])
-		end
+					hp(data,...
+					srate,...
+					sixdbcutoff_hz,...
+					passband_hz,...
+					desired_passband_ripple,...
+					plot_freq_response,...
+					verbose)
+			tic;
+			if size(data,1)>size(data,2)
+				warning('Only works on data with channels as rows');
+			end
+			[sos, n] = iirsos.design_hp(srate, sixdbcutoff_hz, passband_hz, desired_passband_ripple,plot_freq_response,verbose);
+			x = data(:, :)';
+			x = sosfilt(sos, x);
+			x = flip(sosfilt(sos, flip(x)));
+			data = reshape(x', size(data));
+			if verbose
+				disp(['IIR SOS Highpass: Filtered in ',num2str(toc, 3),' seconds'])
+			end
 		end
 		% design highpass
 		function [sos, n] = design_hp(srate, sixdbcutoff_hz, passband_hz, desired_passband_ripple, plot_freq_response, verbose)
-		nyq = srate/2;
-		wp = (passband_hz/nyq); % normalize passband edge
-		d = (passband_hz-sixdbcutoff_hz)/nyq; % normalized desired distance to -6db dropoff
-		ws = -d+wp; % normalized -6db stopband edge
-		rs = 6; % set -6 db dropoff
-		[n,wn] = buttord(wp,ws,desired_passband_ripple,rs);
+			nyq = srate/2;
+			wp = (passband_hz/nyq); % normalize passband edge
+			d = (passband_hz-sixdbcutoff_hz)/nyq; % normalized desired distance to -6db dropoff
+			ws = -d+wp; % normalized -6db stopband edge
+			rs = 6; % set -6 db dropoff
+			[n,wn] = buttord(wp,ws,desired_passband_ripple,rs);
 
-		[A,B,C,D] = butter(n,wn, 'high'); % highpass
-		sos = ss2sos(A,B,C,D); % convert to sos representation
-		if plot_freq_response
-			figure; freqz(sos, srate*100, srate);	title('Stopband')
-			subplot(2,1,1); xlim(gca,[0,passband_hz+passband_hz*.1])
-			subplot(2,1,2); xlim(gca,[0,passband_hz+passband_hz*.1])
-			figure; freqz(sos, srate*100, srate); title('Passband');
-			subplot(2,1,1);
-			xlim(gca,[passband_hz+passband_hz*.1,nyq])
-			ylim(gca,[-.1,.1])
-			subplot(2,1,2);
-			xlim(gca,[passband_hz+passband_hz*.1,nyq])
-			ylim(gca,[-.1,.1])
+			[A,B,C,D] = butter(n,wn, 'high'); % highpass
+			sos = ss2sos(A,B,C,D); % convert to sos representation
+			if plot_freq_response
+				figure; freqz(sos, srate*100, srate);	title('Stopband')
+				subplot(2,1,1); xlim(gca,[0,passband_hz+passband_hz*.1])
+				subplot(2,1,2); xlim(gca,[0,passband_hz+passband_hz*.1])
+				figure; freqz(sos, srate*100, srate); title('Passband');
+				subplot(2,1,1);
+				xlim(gca,[passband_hz+passband_hz*.1,nyq])
+				ylim(gca,[-.1,.1])
+				subplot(2,1,2);
+				xlim(gca,[passband_hz+passband_hz*.1,nyq])
+			end
+			[h,f] = freqz(sos, srate*100, srate );
+			[~,cutoff_i] = min(abs(mag2db(abs(h))+6));
+			if verbose
+				disp(['IIR SOS Highpass: Filter order: ',num2str(n),' points'])
+				% -6dB cutoff in hz
+				disp(['IIR SOS Highpass: -6 dB cutoff point at: ',num2str(f(cutoff_i)),' Hz'])
+				% pb ripple
+				disp(['IIR SOS Highpass: Average passband ripple: ',num2str(mean(abs(mag2db(abs(h(f>=passband_hz)))))),' dB'])
+			end
 		end
-		[h,f] = freqz(sos, srate*100, srate );
-		[~,cutoff_i] = min(abs(mag2db(abs(h))+6));
-		if verbose
-			disp(['IIR SOS Highpass: Filter order: ',num2str(n),' points'])
-			% -6dB cutoff in hz
-			disp(['IIR SOS Highpass: -6 dB cutoff point at: ',num2str(f(cutoff_i)),' Hz'])
-			% pb ripple
-			disp(['IIR SOS Highpass: Average passband ripple: ',num2str(mean(abs(mag2db(abs(h(f>=passband_hz)))))),' dB'])
+		
+		%% LOW PASS method
+		function [...
+				data,...
+				srate,...
+				sixdbcutoff_hz,...
+				passband_hz,...
+				desired_passband_ripple,...
+				n] = ...
+				lp(...
+					data,...
+					srate,...
+					sixdbcutoff_hz,...
+					passband_hz,...
+					desired_passband_ripple,...
+					plot_freq_response,...
+					verbose)
+			if size(data,1)>size(data,2)
+				warning('Only works on data with channels as rows');
+			end
+			tic;
+			[sos, n] = iirsos.design_lp(srate, sixdbcutoff_hz, passband_hz, desired_passband_ripple, plot_freq_response, verbose);
+			x = data(:,:)';
+			x = sosfilt(sos,x);
+			x = flip(sosfilt(sos,flip(x)));
+			data = reshape(x',size(data));
+			if verbose
+				disp(['IIR SOS Lowpass: Filtered in ',num2str(toc,3),' seconds'])
+			end
 		end
+
+		% design lowpass
+		function [sos, n] = design_lp(srate, sixdbcutoff_hz, passband_hz, desired_passband_ripple, plot_freq_response, verbose)
+			nyq = srate/2;
+			wp = (passband_hz/nyq); % normalize passband edge
+			d = abs(passband_hz-sixdbcutoff_hz)/nyq; % normalized desired distance to -6db dropoff
+			ws = d+wp; % normalized -6db stopband edge
+			rs = 6; % set -6 db dropoff
+			[n, wn] = buttord(wp, ws, desired_passband_ripple, rs);
+			[A, B, C, D] = butter(n, wn); % lowpass
+			sos = ss2sos(A, B, C, D); % convert to sos representation
+
+			if plot_freq_response
+				figure; freqz(sos, srate*100, srate);	title('Passband')
+				subplot(2,1,1); xlim(gca,[0,passband_hz+passband_hz*.1])
+				subplot(2,1,2); xlim(gca,[0,passband_hz+passband_hz*.1])
+				figure; freqz(sos, srate*100, srate); title('Stopband');
+				subplot(2,1,1);
+				xlim(gca,[passband_hz,nyq])
+				subplot(2,1,2);
+				xlim(gca,[passband_hz,nyq])
+				ylim(gca,[-.1,.1])
+			end
+
+			[h,f] = freqz(sos, srate*100, srate );
+			[~,cutoff_i] = min(abs(mag2db(abs(h))+6));
+			if verbose
+				disp(['IIR SOS Lowpass: Filter order: ',num2str(n),' points'])
+				% -6dB cutoff in hz
+				disp(['IIR SOS Lowpass: -6 dB cutoff point at: ',num2str(f(cutoff_i)),' Hz'])
+				% pb ripple
+				disp(['IIR SOS Lowpass: Average passband ripple: ',num2str(mean(abs(mag2db(abs(h(f<=passband_hz)))))),' dB'])
+			end
 		end
 		
 		%% BAND PASS method
@@ -108,15 +177,20 @@ classdef iirsos
 
 		if verbose
 			disp(['IIR SOS Bandpass: Filter order: ',num2str(n),' points'])
-			disp(['IIR SOS Bandpass: Rolloff at intended -6dB points: ',num2str(db_at_cutoff,3),' db'])
+			disp(['IIR SOS Bandpass: Rolloff at intended -6dB points: ',num2str(db_at_cutoff,3),' dB'])
 			disp(['IIR SOS Bandpass: Avg. abs. passband ripple: ',num2str(mean(abs(pbr_db))),' dB'])
 			disp(['IIR SOS Bandpass: Max passband ripple: ',num2str(max(abs(pbr_db))),' dB'])
 		end
 		% plot if desired
 		if plot_freq_response
-			figure; 
-			subplot(2,1,1); rjgplot(f, mag2db(abs(h)), 'Frequency (Hz)', 'dB','Frequency Response');
-			subplot(2,1,2); rjgplot(f, mag2db(abs(h)), 'Frequency (Hz)', 'dB','-6db to Max Ripple');
+			figure;
+% 			subplot(2,1,1); rjgplot(f, mag2db(abs(h)), 'Frequency (Hz)', 'dB','Frequency Response');
+% 			subplot(2,1,2); rjgplot(f, mag2db(abs(h)), 'Frequency (Hz)', 'dB','-6dB to Max Ripple');
+			
+			subplot(2,1,1); plot(f, mag2db(abs(h)));
+			xlabel('Frequency (Hz)'); ylabel('dB'); title('Frequency Response');
+			subplot(2,1,2); plot(f, mag2db(abs(h)));
+			xlabel('Frequency (Hz)'); ylabel('dB'); title('-6db to Max Ripple');
 			ylim(gca, [-6, max(mag2db(abs(h)))])
 		end
 		

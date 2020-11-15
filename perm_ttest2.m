@@ -181,19 +181,19 @@ if vartype == 1 % equal variances
 	end
 	xbar_diffs = pxbar-pybar;
 	if tail==0
-		p = nansum(abs(xbar_diffs)>=abs(difference),dim)/nperm
+		p = nansum(abs(xbar_diffs)>=abs(difference),dim)/nperm;
 	elseif tail==-1
-		p = nansum(xbar_diffs<=difference,dim)/nperm
+		p = nansum(xbar_diffs<=difference,dim)/nperm;
 	elseif tail==1
-		p = nansum(xbar_diffs>=difference,dim)/nperm
+		p = nansum(xbar_diffs>=difference,dim)/nperm;
 	end
 % 		p2 = 2*min([sum(xbar_diffs>difference);sum(difference<xbar_diffs)],[],1)/length(xbar_diffs)
 % 		p3 = sum(abs(xbar_diffs)>abs(difference))/length(xbar_diffs)
 % 	if p<0.1
-		disp(['xbar = ',num2str(round(xmean,3)),...
- ', ybar = ',num2str(round(ymean,3)),...
-', diff =', num2str(round(difference,3)),...
-', p = ',num2str(round(p,3))])
+% 		disp(['xbar = ',num2str(round(xmean,3)),...
+%  ', ybar = ',num2str(round(ymean,3)),...
+% ', diff =', num2str(round(difference,3)),...
+% ', p = ',num2str(round(p,3))])
 % 	end
 
 elseif vartype == 2 % unequal variances
