@@ -2,7 +2,7 @@ classdef iirsos
 	properties
 	end
 	methods (Static)
-		% HIGH PASS method
+		%% HIGH PASS method
 		function [data, srate, sixdbcutoff_hz, passband_hz, desired_passband_ripple, n] = ...
 					hp(data,...
 					srate,...
@@ -78,7 +78,7 @@ classdef iirsos
 			end
 			tic;
 			[sos, n] = iirsos.design_lp(srate, sixdbcutoff_hz, passband_hz, desired_passband_ripple, plot_freq_response, verbose);
-			x = data(:,:)';
+			x = double(data(:,:)');
 			x = sosfilt(sos,x);
 			x = flip(sosfilt(sos,flip(x)));
 			data = reshape(x',size(data));
