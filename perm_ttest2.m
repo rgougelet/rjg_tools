@@ -1,4 +1,4 @@
-function [h,p] = perm_ttest2(x,y,varargin)
+function [h,p,ci,stats] = perm_ttest2(x,y,varargin)
 %% performs exactly as native ttest2 function
 % but using permutation statistics, rather
 % than parametric...
@@ -17,9 +17,6 @@ if nargin < 2
 	error(message('stats:ttest2:TooFewInputs'));
 end
 
-% x(isnan(x)) = [];
-% y(isnan(y)) = [];
-
 % Process remaining arguments
 alpha = 0.05;
 tail = 0;    % code for two-sided;
@@ -33,19 +30,25 @@ if nargin>=3
 		% Old syntax
 		%    TTEST2(X,Y,ALPHA,TAIL,VARTYPE,DIM)
 		alpha = varargin{1};
-		if nargin>=4
-			tail = varargin{2};
-			if nargin>=5
-				vartype =  varargin{3};
-				if nargin>=6
-					dim = varargin{4};
-				end
-			end
-		end
-		
+    if nargin>=4
+      tail = varargin{2};
+      if nargin>=5
+        vartype =  varargin{3};
+        if nargin>=6
+          dim = varargin{4};
+          if nargin>=7
+            nperm = varargin{5};
+            if nargin>=8
+              stat = varargin{6};
+            end
+          end
+        end
+      end
+    end
+    
 	elseif nargin==3
 		error(message('stats:ttest2:BadAlpha'));
-		
+    
 	else
 		% Calling sequence with named arguments
 		okargs =   {'alpha' 'tail' 'vartype' 'dim' 'nperm' 'stat'};
@@ -109,19 +112,19 @@ end
 
 xnans = isnan(x);
 if any(xnans(:))
-	nx = nansum(~xnans,dim);
+	nx = sum(~xnans,dim);
 else
 	nx = size(x,dim); % a scalar, => a scalar call to tinv
 end
 ynans = isnan(y);
 if any(ynans(:))
-	ny = nansum(~ynans,dim);
+	ny = sum(~ynans,dim);
 else
 	ny = size(y,dim); % a scalar, => a scalar call to tinv
 end
 
-s2x = nanvar(x,[],dim);
-s2y = nanvar(y,[],dim);
+% s2x = nanvar(x,[],dim);
+% s2y = nanvar(y,[],dim);
 if strcmp(stat,'mean')
 	xmean = nanmean(x,dim);
 	ymean = nanmean(y,dim);
@@ -152,52 +155,22 @@ if any(fix(:))
 	difference(fix) = 0;
 end
 
-if vartype == 1 || 2% equal variances /rjg assumption matters not nonparam
-	P = cat(dim,x,y);
-	n = size(P,dim);
-	x_inds = logical([ones(1,nx), zeros(1,ny)]);
-	xsubinds = repmat({':'},1,ndims(P));
-	ysubinds = repmat({':'},1,ndims(P));
-	psubinds = repmat({':'},1,ndims(P));
-% /rjg	disp(['Running permutation t-test using ', num2str(nperm),' iterations']);
-	for perm_i = 1:nperm	
-		x_inds = x_inds(randperm(n));
-		xsubinds{dim} = x_inds;
-		ysubinds{dim} = ~x_inds;
-		
-		px = P(xsubinds{:});
-		py = P(ysubinds{:});
-		psubinds{dim} = perm_i;
-		if strcmp(stat,'mean')
-			pxbar(psubinds{:}) = nanmean(px,dim);
-			pybar(psubinds{:}) = nanmean(py,dim);
-		elseif strcmp(stat,'median')
-			pxbar(psubinds{:}) = nanmedian(px,dim);
-			pybar(psubinds{:}) = nanmedian(py,dim);
-		end
-% /rjg	if any(perm_i == round(nperm*(0:.1:1)))
-% 			disp([num2str(round(100*perm_i/nperm)), '% done'])
-% 		end
-	end
-	xbar_diffs = pxbar-pybar;
-	if tail==0
-		p = nansum(abs(xbar_diffs)>=abs(difference),dim)/nperm;
-	elseif tail==-1
-		p = nansum(xbar_diffs<=difference,dim)/nperm;
-	elseif tail==1
-		p = nansum(xbar_diffs>=difference,dim)/nperm;
-	end
-% 		p2 = 2*min([sum(xbar_diffs>difference);sum(difference<xbar_diffs)],...
-%       [],1)/length(xbar_diffs)
-% 		p3 = sum(abs(xbar_diffs)>abs(difference))/length(xbar_diffs)
-% 	if p<0.1
-% 		disp(['xbar = ',num2str(round(xmean,3)),...
-%  ', ybar = ',num2str(round(ymean,3)),...
-% ', diff =', num2str(round(difference,3)),...
-% ', p = ',num2str(round(p,3))])
-% 	end
-
-% elseif vartype == 2 % unequal variances /rjg assumption matters not nonparam
+% if vartype == 1 % equal variances
+%     dfe = nx + ny - 2;
+%     sPooled = sqrt(((nx-1) .* s2x + (ny-1) .* s2y) ./ dfe);
+%     sPooled(fix) = 0;
+%     
+%     se = sPooled .* sqrt(1./nx + 1./ny);
+%     ratio = difference ./ se;
+% 
+%     if (nargout>3)
+%         stats = struct('tstat', ratio, 'df', cast(dfe,'like',ratio), ...
+%                        'sd', sPooled);
+%         if isscalar(dfe) && ~isscalar(ratio)
+%             stats.df = repmat(stats.df,size(ratio));
+%         end
+%     end
+% elseif vartype == 2 % unequal variances
 %     s2xbar = s2x ./ nx;
 %     s2ybar = s2y ./ ny;
 %     dfe = (s2xbar + s2ybar) .^2 ./ (s2xbar.^2 ./ (nx-1) + s2ybar.^2 ./ (ny-1));
@@ -221,40 +194,120 @@ if vartype == 1 || 2% equal variances /rjg assumption matters not nonparam
 %     % computed ok in either case.
 %     if all(se(:) == 0), dfe = 1; end
 % end
+
+if vartype == 1 || 2
+	P = cat(dim,x,y);
+	n = size(P,dim);
+	x_inds = logical([ones(1,nx), zeros(1,ny)]);
+	xsubinds = repmat({':'},1,ndims(P));
+	ysubinds = repmat({':'},1,ndims(P));
+	psubinds = repmat({':'},1,ndims(P));
+% /rjg	disp(['Running permutation t-test using ', num2str(nperm),' iterations']);
+	for perm_i = 1:nperm	
+		x_inds = x_inds(randperm(n));
+		xsubinds{dim} = x_inds;
+		ysubinds{dim} = ~x_inds;
+		
+		px = P(xsubinds{:});
+		py = P(ysubinds{:});
+		psubinds{dim} = perm_i;
+		if strcmp(stat,'mean')
+			pxbar(psubinds{:}) = nanmean(px,dim);
+			pybar(psubinds{:}) = nanmean(py,dim);
+		elseif strcmp(stat,'median')
+			pxbar(psubinds{:}) = nanmedian(px,dim);
+			pybar(psubinds{:}) = nanmedian(py,dim);
+    end
+  end
+	xbar_diffs = pxbar-pybar;
+end
+
+if vartype == 1 % equal variances
+  dfe = nx + ny - 2;
+  se = std(xbar_diffs, 1, dim);
+  se(fix) = 0;
+  se_x = std(pxbar, 1, dim);
+  se_y = std(pybar, 1, dim);
+  se_x(fix) = 0;
+  se_y(fix) = 0;
+  ratio = difference ./ se;
+  if (nargout>3)
+    stats = struct('tstat', ratio, 'df', cast(dfe, 'like', ratio), ...
+      'sd', se*sqrt(nperm), 'se', se, 'se_x', se_x, 'se_y', se_y);
+    if isscalar(dfe) && ~isscalar(ratio)
+      stats.df = repmat(stats.df, size(ratio));
+    end
+  end
+elseif vartype == 2 % unequal variances
+  dfe = nx + ny - 2;
+  se = std(xbar_diffs, 1, dim);
+  se(fix) = 0;
+  se_x = std(pxbar, 1, dim);
+  se_y = std(pybar, 1, dim);
+  se_x(fix) = 0;
+  se_y(fix) = 0;
+  ratio = difference ./ se;
+
+  if (nargout>3)
+    stats = struct('tstat', ratio, 'df', cast(dfe, 'like', ratio), ...
+      'sd', cat(dim, se_x*sqrt(nperm), se_y)*sqrt(nperm),...
+      'se', se, 'se_x', se_x, 'se_y', se_y);
+    if isscalar(dfe) && ~isscalar(ratio)
+      stats.df = repmat(stats.df, size(ratio));
+    end
+  end
+  if all(se(:) == 0), dfe = 1; end
+end
+
+% Compute the correct p-value for the test, and confidence intervals
+% if requested.
+% if tail == 0 % two-tailed test
+%     p = 2 * tcdf(-abs(ratio),dfe);
+%     if nargout > 2
+%         spread = tinv(1 - alpha ./ 2, dfe) .* se;
+%         ci = cat(dim, difference-spread, difference+spread);
+%     end
+% elseif tail == 1 % right one-tailed test
+%     p = tcdf(-ratio,dfe);
+%     if nargout > 2
+%         spread = tinv(1 - alpha, dfe) .* se;
+%         ci = cat(dim, difference-spread, Inf(size(p)));
+%     end
+% elseif tail == -1 % left one-tailed test
+%     p = tcdf(ratio,dfe);
+%     if nargout > 2
+%         spread = tinv(1 - alpha, dfe) .* se;
+%         ci = cat(dim, -Inf(size(p)), difference+spread);
+%     end
+% end
+
+if tail==0
+  p = nansum(abs(xbar_diffs)>=abs(difference), dim)/nperm;
+  confidence_bounds = [alpha/2, 1-alpha/2];
+  ci_bounds = quantile(xbar_diffs, confidence_bounds);
+  if nargout > 2
+    ci = cat(dim, ci_bounds);
+  end
+elseif tail==-1
+  p = nansum(xbar_diffs<=difference, dim)/nperm;
+  confidence_bounds = [alpha, 1-alpha];
+  ci_bounds = quantile(xbar_diffs, confidence_bounds);
+  if nargout > 2
+    ci = cat(dim, ci_bounds(1), Inf(size(p)));
+  end
+elseif tail==1
+  p = nansum(xbar_diffs>=difference, dim)/nperm;
+  confidence_bounds = [alpha, 1-alpha];
+  ci_bounds = quantile(xbar_diffs, confidence_bounds);
+  if nargout > 2
+    ci = cat(dim, -Inf(size(p)), ci_bounds(2));
+  end
+end
+
+% Determine if the actual significance exceeds the desired significance
 h = cast(p <= alpha, 'like', p);
 h(isnan(p)) = NaN; % p==NaN => neither <= alpha nor > alpha
 
-if nperm
-  se = nanstd(xbar_diffs);
-  ratio = difference ./ se;
-  if (nargout>3)
-		stats = struct('tstat', ratio, 'df', NaN, ...
-			'sd', se);
-  end
-else
-  if vartype == 1 % equal variances
-    dfe = nx + ny - 2;
-    se = std(xbar_diffs,1,dim);
-    ratio = difference ./ se;
-    if (nargout>3)
-      stats = struct('tstat', ratio, 'df', cast(dfe,'like',ratio), ...
-        'sd', se*sqrt(nperm));
-      if isscalar(dfe) && ~isscalar(ratio)
-        stats.df = repmat(stats.df,size(ratio));
-      end
-    end
-  elseif vartype == 2 % unequal variances
-    dfe = nx + ny - 2;
-    se_x = std(pxbar,0,dim);
-    se_y = std(pybar,0,dim);
-
-    if (nargout>3)
-      stats = struct('tstat', ratio, 'df', cast(dfe,'like',ratio), ...
-        'sd', cat(dim, s2x, s2y));
-      if isscalar(dfe) && ~isscalar(ratio)
-        stats.df = repmat(stats.df,size(ratio));
-      end
-    end
-    if all(se(:) == 0), dfe = 1; end
-  end
-end
+stats.h = h;
+stats.p = p;
+stats.ci = ci;

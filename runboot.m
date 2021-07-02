@@ -1,14 +1,16 @@
-function bhs = runboot(X,y,res,n_boot)
-	bhs = nan(n_boot,size(X,2));
-	nanIdx = any(isnan(X),2) | isnan(y) | isnan(res); 
-	res = res(~nanIdx); X = X(~nanIdx,:); y = y(~nanIdx);
-	for i = 1:n_boot
-		if mod(i,round(n_boot/20)) == 0
-			disp([num2str(100*(i/n_boot)),'% done']);
-		end
-		sh = randi(length(res),length(res),1);
-		y = y+res(sh);
-		bhs(i,:) = X\y ;
-	end
+function bhs = boot_reg(X,y,res,n_boot)
+  % runs bootstrap regression by shuffling residuals
+% 	bhs = nan(n_boot,size(X,2));
+% 	nanIdx = any(isnan(X),2) | isnan(y) | isnan(res); 
+% 	res = res(~nanIdx); X = X(~nanIdx,:); y = y(~nanIdx);
+% 	for i = 1:n_boot
+% 		if mod(i,round(n_boot/20)) == 0
+% 			disp([num2str(100*(i/n_boot)),'% done']);
+% 		end
+% 		sh = randi(length(res),length(res),1);
+% 		y = y+res(sh);
+% 		bhs(i,:) = X\y ;
+% 	end
+    error('runboot deprecated, use reg_boot');
 end
 
