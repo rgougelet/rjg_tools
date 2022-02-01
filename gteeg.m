@@ -185,16 +185,12 @@ function p = gteeg(varargin)
 	for ep_i = 1:p.n.epochs
 		nyq = p.srate/2;
 		f = 0:(p.srate/p.n.pnts):nyq;
-		f_i = 1:((p.n.pnts/2)+1);
-		x = randn(1, p.n.pnts);
-		X = fft(x,p.n.pnts)/p.n.pnts;
-		X = X(f_i);
-		X = X.*(f).^(p.noise.pink.chi);
-		X(1) = 0;
-		X = [X conj(X(end-1:-1:2))];
-		y = real(ifft(X));
-		y = y(1:p.n.pnts);
-		p.noise.pink.data(:, ep_i) = 2*p.noise.pink.sd*ones(1,length(y)).*y./std(y);
+    noise = [];
+    for f_i = 1:length(f)
+      amp = f(f_i)^p.noise.pink.chi;
+      noise = noise + amp*sin(2*pi*f(f_i)*p.t.s+rand*2*pi);
+    end
+    p.noise.pink.data(:,ep_i) = noise;
 	end
 
 	%% white noise

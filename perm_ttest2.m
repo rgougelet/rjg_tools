@@ -9,6 +9,7 @@ function [h,p,ci,stats] = perm_ttest2(x,y,varargin)
 % (1,2,:), where dim = 3; if not true then statistical power
 % may be reduced.
 % can also be used to test medians, as well as means
+
 if nargin > 2
 	[varargin{:}] = convertStringsToChars(varargin{:});
 end
@@ -126,12 +127,12 @@ end
 % s2x = nanvar(x,[],dim);
 % s2y = nanvar(y,[],dim);
 if strcmp(stat,'mean')
-	xmean = nanmean(x,dim);
-	ymean = nanmean(y,dim);
+	xmean = mean(x,dim,'omitnan');
+	ymean = mean(y,dim,'omitnan');
 	difference = xmean - ymean;
 elseif strcmp(stat,'median')
-	xmedian = nanmedian(x,dim);
-	ymedian = nanmedian(y,dim);
+	xmedian = median(x,dim,'omitnan');
+	ymedian = median(y,dim,'omitnan');
 	difference = xmedian - ymedian;
 end
 
@@ -155,50 +156,10 @@ if any(fix(:))
 	difference(fix) = 0;
 end
 
-% if vartype == 1 % equal variances
-%     dfe = nx + ny - 2;
-%     sPooled = sqrt(((nx-1) .* s2x + (ny-1) .* s2y) ./ dfe);
-%     sPooled(fix) = 0;
-%     
-%     se = sPooled .* sqrt(1./nx + 1./ny);
-%     ratio = difference ./ se;
-% 
-%     if (nargout>3)
-%         stats = struct('tstat', ratio, 'df', cast(dfe,'like',ratio), ...
-%                        'sd', sPooled);
-%         if isscalar(dfe) && ~isscalar(ratio)
-%             stats.df = repmat(stats.df,size(ratio));
-%         end
-%     end
-% elseif vartype == 2 % unequal variances
-%     s2xbar = s2x ./ nx;
-%     s2ybar = s2y ./ ny;
-%     dfe = (s2xbar + s2ybar) .^2 ./ (s2xbar.^2 ./ (nx-1) + s2ybar.^2 ./ (ny-1));
-%     se = sqrt(s2xbar + s2ybar);
-%     se(fix) = 0;
-%     ratio = difference ./ se;
-% 
-%     if (nargout>3)
-%         stats = struct('tstat', ratio, 'df', cast(dfe,'like',ratio), ...
-%                        'sd', sqrt(cat(dim, s2x, s2y)));
-%         if isscalar(dfe) && ~isscalar(ratio)
-%             stats.df = repmat(stats.df,size(ratio));
-%         end
-%     end
-%     
-%     % Satterthwaite's approximation breaks down when both samples have zero
-%     % variance, so we may have gotten a NaN dfe.  But if the difference in
-%     % means is non-zero, the hypothesis test can still reasonable results,
-%     % that don't depend on the dfe, so give dfe a dummy value.  If difference
-%     % in means is zero, the hypothesis test returns NaN.  The CI can be
-%     % computed ok in either case.
-%     if all(se(:) == 0), dfe = 1; end
-% end
-
-if vartype == 1 || 2
+if vartype == 1 || 2 % variance assumptions don't matter with bootstrap
 	P = cat(dim,x,y);
 	n = size(P,dim);
-	x_inds = logical([ones(1,nx), zeros(1,ny)]);
+	x_inds = [true(size(x,dim),1);false(size(y,dim),1)]; % shuffles nans, but then ignores them
 	xsubinds = repmat({':'},1,ndims(P));
 	ysubinds = repmat({':'},1,ndims(P));
 	psubinds = repmat({':'},1,ndims(P));
@@ -212,11 +173,11 @@ if vartype == 1 || 2
 		py = P(ysubinds{:});
 		psubinds{dim} = perm_i;
 		if strcmp(stat,'mean')
-			pxbar(psubinds{:}) = nanmean(px,dim);
-			pybar(psubinds{:}) = nanmean(py,dim);
+			pxbar(psubinds{:}) = mean(px,dim,'omitnan');
+			pybar(psubinds{:}) = mean(py,dim,'omitnan');
 		elseif strcmp(stat,'median')
-			pxbar(psubinds{:}) = nanmedian(px,dim);
-			pybar(psubinds{:}) = nanmedian(py,dim);
+			pxbar(psubinds{:}) = median(px,dim,'omitnan');
+			pybar(psubinds{:}) = median(py,dim,'omitnan');
     end
   end
 	xbar_diffs = pxbar-pybar;
@@ -233,7 +194,7 @@ if vartype == 1 % equal variances
   ratio = difference ./ se;
   if (nargout>3)
     stats = struct('tstat', ratio, 'df', cast(dfe, 'like', ratio), ...
-      'sd', se*sqrt(nperm), 'se', se, 'se_x', se_x, 'se_y', se_y);
+      'sd', se*sqrt(1/nperm), 'se', se, 'se_x', se_x, 'se_y', se_y);
     if isscalar(dfe) && ~isscalar(ratio)
       stats.df = repmat(stats.df, size(ratio));
     end
@@ -250,7 +211,7 @@ elseif vartype == 2 % unequal variances
 
   if (nargout>3)
     stats = struct('tstat', ratio, 'df', cast(dfe, 'like', ratio), ...
-      'sd', cat(dim, se_x*sqrt(nperm), se_y)*sqrt(nperm),...
+      'sd', cat(dim, se_x*sqrt(1/nperm), se_y*sqrt(1/nperm)),...
       'se', se, 'se_x', se_x, 'se_y', se_y);
     if isscalar(dfe) && ~isscalar(ratio)
       stats.df = repmat(stats.df, size(ratio));
@@ -259,48 +220,26 @@ elseif vartype == 2 % unequal variances
   if all(se(:) == 0), dfe = 1; end
 end
 
-% Compute the correct p-value for the test, and confidence intervals
-% if requested.
-% if tail == 0 % two-tailed test
-%     p = 2 * tcdf(-abs(ratio),dfe);
-%     if nargout > 2
-%         spread = tinv(1 - alpha ./ 2, dfe) .* se;
-%         ci = cat(dim, difference-spread, difference+spread);
-%     end
-% elseif tail == 1 % right one-tailed test
-%     p = tcdf(-ratio,dfe);
-%     if nargout > 2
-%         spread = tinv(1 - alpha, dfe) .* se;
-%         ci = cat(dim, difference-spread, Inf(size(p)));
-%     end
-% elseif tail == -1 % left one-tailed test
-%     p = tcdf(ratio,dfe);
-%     if nargout > 2
-%         spread = tinv(1 - alpha, dfe) .* se;
-%         ci = cat(dim, -Inf(size(p)), difference+spread);
-%     end
-% end
-
-if tail==0
+if tail == 0 % two-tailed test
   p = nansum(abs(xbar_diffs)>=abs(difference), dim)/nperm;
   confidence_bounds = [alpha/2, 1-alpha/2];
-  ci_bounds = quantile(xbar_diffs, confidence_bounds);
+  ci_bounds = quantile(xbar_diffs, confidence_bounds, 'dim', dim);
   if nargout > 2
     ci = cat(dim, ci_bounds);
   end
-elseif tail==-1
-  p = nansum(xbar_diffs<=difference, dim)/nperm;
-  confidence_bounds = [alpha, 1-alpha];
-  ci_bounds = quantile(xbar_diffs, confidence_bounds);
-  if nargout > 2
-    ci = cat(dim, ci_bounds(1), Inf(size(p)));
-  end
-elseif tail==1
+elseif tail == 1 % right one-tailed test
   p = nansum(xbar_diffs>=difference, dim)/nperm;
   confidence_bounds = [alpha, 1-alpha];
-  ci_bounds = quantile(xbar_diffs, confidence_bounds);
+  ci_bounds = quantile(xbar_diffs, confidence_bounds, 'dim', dim);
   if nargout > 2
     ci = cat(dim, -Inf(size(p)), ci_bounds(2));
+  end
+elseif tail == -1 % left one-tailed test
+  p = nansum(xbar_diffs<=difference, dim)/nperm;
+  confidence_bounds = [alpha, 1-alpha];
+  ci_bounds = quantile(xbar_diffs, confidence_bounds, 'dim', dim);
+  if nargout > 2
+    ci = cat(dim, ci_bounds(1), Inf(size(p)));
   end
 end
 
