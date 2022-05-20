@@ -1,0 +1,122 @@
+[
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  reg_boot_data.c -o build/win64/reg_boot_data.o",
+    "file": "reg_boot_data.c",
+    "output": "build/win64/reg_boot_data.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  rt_nonfinite.c -o build/win64/rt_nonfinite.o",
+    "file": "rt_nonfinite.c",
+    "output": "build/win64/rt_nonfinite.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  reg_boot_initialize.c -o build/win64/reg_boot_initialize.o",
+    "file": "reg_boot_initialize.c",
+    "output": "build/win64/reg_boot_initialize.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  reg_boot_terminate.c -o build/win64/reg_boot_terminate.o",
+    "file": "reg_boot_terminate.c",
+    "output": "build/win64/reg_boot_terminate.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  reg_boot.c -o build/win64/reg_boot.o",
+    "file": "reg_boot.c",
+    "output": "build/win64/reg_boot.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  mldivide.c -o build/win64/mldivide.o",
+    "file": "mldivide.c",
+    "output": "build/win64/mldivide.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  repmat.c -o build/win64/repmat.o",
+    "file": "repmat.c",
+    "output": "build/win64/repmat.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  eml_int_forloop_overflow_check.c -o build/win64/eml_int_forloop_overflow_check.o",
+    "file": "eml_int_forloop_overflow_check.c",
+    "output": "build/win64/eml_int_forloop_overflow_check.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  warning.c -o build/win64/warning.o",
+    "file": "warning.c",
+    "output": "build/win64/warning.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  qrsolve.c -o build/win64/qrsolve.o",
+    "file": "qrsolve.c",
+    "output": "build/win64/qrsolve.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  infocheck.c -o build/win64/infocheck.o",
+    "file": "infocheck.c",
+    "output": "build/win64/infocheck.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  randi.c -o build/win64/randi.o",
+    "file": "randi.c",
+    "output": "build/win64/randi.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  rand.c -o build/win64/rand.o",
+    "file": "rand.c",
+    "output": "build/win64/rand.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  indexShapeCheck.c -o build/win64/indexShapeCheck.o",
+    "file": "indexShapeCheck.c",
+    "output": "build/win64/indexShapeCheck.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  interface/_coder_reg_boot_api.c -o build/win64/_coder_reg_boot_api.o",
+    "file": "interface/_coder_reg_boot_api.c",
+    "output": "build/win64/_coder_reg_boot_api.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  interface/_coder_reg_boot_mex.c -o build/win64/_coder_reg_boot_mex.o",
+    "file": "interface/_coder_reg_boot_mex.c",
+    "output": "build/win64/_coder_reg_boot_mex.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  xgeqp3.c -o build/win64/xgeqp3.o",
+    "file": "xgeqp3.c",
+    "output": "build/win64/xgeqp3.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  reg_boot_emxutil.c -o build/win64/reg_boot_emxutil.o",
+    "file": "reg_boot_emxutil.c",
+    "output": "build/win64/reg_boot_emxutil.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  interface/_coder_reg_boot_info.c -o build/win64/_coder_reg_boot_info.o",
+    "file": "interface/_coder_reg_boot_info.c",
+    "output": "build/win64/_coder_reg_boot_info.o"
+  },
+  {
+    "directory": "C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2021a\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\" -I \"C:\\Users\\Rob\\Documents\\MATLAB\\ant_av_eeg\\deps\\rjg_tools\\codegen\\mex\\reg_boot\\interface\" -I \"C:\\Program Files\\MATLAB\\R2021a\\extern\\include\" -I \".\" -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=reg_boot_mex -D__USE_MINGW_ANSI_STDIO=1 -fopenmp  \"C:/Program Files/MATLAB/R2021a/extern/version/c_mexapi_version.c\" -o build/win64/c_mexapi_version.o",
+    "file": "C:/Program Files/MATLAB/R2021a/extern/version/c_mexapi_version.c",
+    "output": "build/win64/c_mexapi_version.o"
+  }
+]

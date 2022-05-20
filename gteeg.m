@@ -21,7 +21,8 @@ function p = gteeg(varargin)
 		p.erp.osc.ramp.down.length.ms = 50;
 		p.erp.osc.f = 30;
 		p.erp.osc.a = 0;
-
+        
+        % event-related synchronization
 		% time-locked, phase-locked
 		p.ers.osc.on.set.pnts = p.izero;
 		p.ers.osc.off.set.ms = [800];
@@ -30,6 +31,7 @@ function p = gteeg(varargin)
 		p.ers.osc.f = 10;
 		p.ers.osc.a = 5;
 
+        % event-related desynchronization
 		% time-locked, non-phase-locked 
 		% could also be phase-locked, if phase resetting was implemented, 
 		% but its not
@@ -44,6 +46,8 @@ function p = gteeg(varargin)
 		p.noise.pink.chi = -0.25;
 		p.noise.pink.sd = 0;
 		p.noise.white.sd = 0;
+    else
+        p = varargin{:};
 	end
 	
 	% Every time-related input parameter is in milliseconds, except
@@ -185,16 +189,12 @@ function p = gteeg(varargin)
 	for ep_i = 1:p.n.epochs
 		nyq = p.srate/2;
 		f = 0:(p.srate/p.n.pnts):nyq;
-		f_i = 1:((p.n.pnts/2)+1);
-		x = randn(1, p.n.pnts);
-		X = fft(x,p.n.pnts)/p.n.pnts;
-		X = X(f_i);
-		X = X.*(f).^(p.noise.pink.chi);
-		X(1) = 0;
-		X = [X conj(X(end-1:-1:2))];
-		y = real(ifft(X));
-		y = y(1:p.n.pnts);
-		p.noise.pink.data(:, ep_i) = 2*p.noise.pink.sd*ones(1,length(y)).*y./std(y);
+    noise = zeros(size(p.t.s));
+    for f_i = 1:length(f)
+      if f(f_i) ~= 0; amp = f(f_i)^p.noise.pink.chi; else; amp = 0; end
+      noise = noise + amp*sin(2*pi*f(f_i)*p.t.s+rand*2*pi);
+    end
+    p.noise.pink.data(:,ep_i) = noise;
 	end
 
 	%% white noise
