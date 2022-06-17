@@ -264,13 +264,12 @@ classdef iirsos
         end
         if verbose
           % check -6db cutoff
-          disp(['IIR SOS Bandpass: Intended -6dB cutoff points: ', sprintf('%4.2f %4.2f', outer_hz)])
+          disp('Intended -6dB cutoff points: ', sprintf('%4.2f %4.2f', outer_hz))
           [db_at_cutoff, cutoff_i] = mink(abs(mag2db(abs(h))+6), 2);
-          [cutoff_i, sort_i] = sort(cutoff_i);
-          db_at_cutoff = db_at_cutoff(sort_i);
+          sort(cutoff_i)
           db_at_cutoff = db_at_cutoff-6;
           disp(['IIR SOS Bandpass: -6 dB cutoff points at: ', ...
-            num2str(f(cutoff_i)','%4.2f %4.2f'),' Hz']);
+            num2str(f()','%4.2f %4.2f'),' Hz']);
 
           % check pb ripple
           lf = f >= inner_hz(1);
