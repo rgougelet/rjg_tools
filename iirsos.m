@@ -104,6 +104,7 @@ classdef iirsos
       
       if verbose
         [~, cutoff_i] = min(abs(mag2db(abs(h))+6));
+        disp(['IIR SOS Highpass: Intended -6dB cutoff point: ', sprintf('%4.2f', sixdbcutoff_hz)])
         disp(['IIR SOS Highpass: Passband edge: ',num2str(passband_hz),' Hz'])
         disp(['IIR SOS Highpass: Derived -6 dB cutoff point at: ',num2str(f(cutoff_i)),' Hz'])
         disp(['IIR SOS Highpass: Filter order: ',num2str(n),' points'])
@@ -194,6 +195,7 @@ classdef iirsos
 
       if verbose
         [~, cutoff_i] = min(abs(mag2db(abs(h))+6));
+        disp(['IIR SOS Lowpass: Intended -6dB cutoff point: ', sprintf('%4.2f', sixdbcutoff_hz)])
         disp(['IIR SOS Lowpass: Passband edge: ',num2str(passband_hz),' Hz'])
         disp(['IIR SOS Lowpass: Derived -6 dB cutoff point at: ',num2str(f(cutoff_i)),' Hz'])
         disp(['IIR SOS Lowpass: Filter order: ',num2str(n),' points'])
